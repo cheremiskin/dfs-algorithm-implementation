@@ -1,5 +1,6 @@
 import sys
 
+# Функция для создания матрицы смежности
 def create_adjacency_matrix(edges):
     graph = {}
     for u, v in edges:
@@ -11,6 +12,7 @@ def create_adjacency_matrix(edges):
         graph[v].add(u)
     return graph
 
+# Функция обхода в глубину
 def dfs(graph, start, end):
     visited = set()
     stack = [(start, 0)]
@@ -40,5 +42,9 @@ if __name__ == "__main__":
             u, v = map(int, line.strip().split())
             edges.append((int(u), int(v)))
     graph = create_adjacency_matrix(edges)
+
+    if start_vertex not in graph or end_vertex not in graph:
+        raise Exception("Одна или обе вершины отсутствуют в ребрах.")
+
     path_length = dfs(graph, start_vertex, end_vertex)
     print(f'Длина пути: {path_length}')
