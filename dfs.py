@@ -40,5 +40,9 @@ if __name__ == "__main__":
             u, v = map(int, line.strip().split())
             edges.append((int(u), int(v)))
     graph = create_adjacency_matrix(edges)
+
+    if start_vertex not in graph or end_vertex not in graph:
+        raise Exception("Одна или обе вершины отсутствуют в ребрах.")
+
     path_length = dfs(graph, start_vertex, end_vertex)
     print(f'Длина пути: {path_length}')
