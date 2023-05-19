@@ -1,19 +1,5 @@
 import sys
 
-
-def dfs(graph, start):
-    visited = set()
-    stack = [start]
-
-    while stack:
-        vertex = stack.pop()
-
-        if vertex not in visited:
-            print(vertex)
-            visited.add(vertex)
-            stack.extend(graph[vertex] - visited)
-
-
 def create_adjacency_matrix(edges):
     graph = {}
     for u, v in edges:
@@ -25,14 +11,34 @@ def create_adjacency_matrix(edges):
         graph[v].add(u)
     return graph
 
+def dfs(graph, start, end):
+    visited = set()
+    stack = [(start, 0)]
+    path_length = -1
+
+    while stack:
+        vertex, count = stack.pop()
+
+        if vertex not in visited:
+            print(vertex)
+            visited.add(vertex)
+            if vertex == end:
+                path_length = count
+            for neighbor in graph[vertex]:
+                stack.append((neighbor, count + 1))
+
+    return path_length
+
 
 if __name__ == "__main__":
     filename = sys.argv[1]
     start_vertex = int(sys.argv[2])
+    end_vertex = int(sys.argv[3])
     edges = []
     with open(filename, "r") as file:
         for line in file:
             u, v = map(int, line.strip().split())
             edges.append((int(u), int(v)))
     graph = create_adjacency_matrix(edges)
-    dfs(graph, start_vertex)
+    path_length = dfs(graph, start_vertex, end_vertex)
+    print(f'Длина пути: {path_length}')
