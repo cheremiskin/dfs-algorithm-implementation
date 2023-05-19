@@ -1,6 +1,7 @@
 import sys
 
-# Создание матрицы смежности.
+
+# Function for creating an adjacency matrix
 def create_adjacency_matrix(edges):
     graph = {}
     for u, v in edges:
@@ -12,7 +13,8 @@ def create_adjacency_matrix(edges):
         graph[v].add(u)
     return graph
 
-# Обход в глубину
+
+# Depth-first search function
 def dfs(graph, start, end):
     visited = set()
     stack = [(start, 0)]
